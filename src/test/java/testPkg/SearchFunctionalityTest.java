@@ -14,14 +14,14 @@ public class SearchFunctionalityTest extends Base{
 	HomePage hp;
 	SearchResultPage srp;
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun=true)
 	public void loadBrowser() {
 		intitialization();
 		hp = new HomePage();
 		srp = new SearchResultPage();
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun=true)
 	public void closeBroswer() {
 		tearDown();
 	}
@@ -39,6 +39,16 @@ public class SearchFunctionalityTest extends Base{
 		Assert.assertEquals(srp.returnSearchResultPageTitle(), expectedTitle);
 		Assert.assertTrue(srp.returnSearchResultPageUrl().contains(product));
 		Assert.assertFalse(!srp.returnSearchResultPageTitle().contains(product));
+	}
+	
+	
+	@Test(dataProviderClass = dataPkg.SearchFunctionalityTestData.class, 
+			dataProvider="negativeSearchData", groups="new script")
+	public void negativeSearchFunctionalityTest(String product) {
+		hp.enterProductOnSerachField(product);
+		hp.clickSearchBtn();
+		Assert.assertEquals(srp.returnNoSearchResultErrorMsg(), 
+				prop.getProperty("expectedNoResultErorMsg"));
 	}
 
 }

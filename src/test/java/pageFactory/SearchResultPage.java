@@ -11,6 +11,9 @@ public class SearchResultPage extends Base{
 	@FindBy(xpath="//span[@class=\"a-color-state a-text-bold\"]")
 	WebElement searchResultTxt;
 	
+	@FindBy(xpath="//span[text()='No results for ']")
+	WebElement noSearchResultErrorMsg;
+	
 	public SearchResultPage() {
 		PageFactory.initElements(driver, this);
 	}
@@ -27,5 +30,9 @@ public class SearchResultPage extends Base{
 	
 	public String returnSearchResultPageUrl() {
 		return driver.getCurrentUrl();
+	}
+	
+	public String returnNoSearchResultErrorMsg() {
+		return noSearchResultErrorMsg.getText();
 	}
 }
